@@ -1,9 +1,10 @@
 class Csc < Formula
-  desc "Göteborgs Universitet Computational Service Client (csc)"
+  desc "Universitet of Gothenburg - Computational Service Client (csc)"
   homepage "https://repo.compute.gu.se/"
+  version "0.9.11"
+
   url "https://repo.compute.gu.se/src/csc-0.9.11.tar.gz"
   sha256 "941907e6f5714a7bf672c13bb9a76e6c1096614b2f3939efb820d2a72cd248d9"
-  version "0.9.11"
 
   depends_on "perl"
   depends_on "cpanminus"
@@ -11,31 +12,45 @@ class Csc < Formula
   def install
     libexec.install "csc"
 
-    # Force the script to run with Homebrew perl (NOT macOS /usr/bin/perl)
     perl = Formula["perl"].opt_bin/"perl"
+
+    # Ensure the script runs with Homebrew perl (your tarball has #!/usr/bin/env perl)
     inreplace libexec/"csc", %r{\A#!\s*/usr/bin/env\s+perl\s*$}, "#!#{perl}\n"
 
     vendor = libexec/"vendor"
     vendor.mkpath
 
-    # Keep cpanm state inside the keg
+    # Make sure we can find cpanm in PATH, but execute it with Homebrew perl
+    ENV.prepend_path "PATH", Formula["cpanminus"].opt_bin
+
+    # Keep cpanm build/cache inside the keg
     ENV["PERL_CPANM_HOME"] = (libexec/"cpanm_home").to_s
     ENV["PERL_CPANM_OPT"]  = "--notest --quiet"
 
-    # Install runtime deps (CSC::* are embedded in csc)
-    system "cpanm",
+    # Determine perl archname (e.g. darwin-thread-multi-2level)
+    arch = Utils.safe_popen_read(perl.to_s, "-MConfig", "-e", "print $Config{archname}")
+
+    # Install only non-core deps + HTTPS stack
+    system perl, "-S", "cpanm",
            "--local-lib-contained", vendor,
+           "List::MoreUtils",
+           "Text::Table",
            "JSON::MaybeXS",
            "LWP::UserAgent",
            "URI",
-           "Text::Table",
-           "List::MoreUtils",
            "File::HomeDir",
            "XML::LibXML",
-           "Archive::Zip"
+           "Archive::Zip",
+           "LWP::Protocol::https",
+           "IO::Socket::SSL",
+           "Mozilla::CA",
+           "Net::SSLeay"
 
     env = {
-      "PERL5LIB" => (vendor/"lib/perl5").to_s
+      "PERL5LIB" => [
+        vendor/"lib/perl5",
+        vendor/"lib/perl5"/arch,
+      ].join(":"),
     }
 
     (bin/"csc").write_env_script(libexec/"csc", env)
