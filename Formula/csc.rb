@@ -11,7 +11,7 @@ class Csc < Formula
   # The tarball should contain a single file: `csc` (the executable Perl script),
   # with embedded CSC::* modules.
   url "https://repo.compute.gu.se/src/csc-0.9.11.tar.gz"
-  sha256 "REPLACE_WITH_SHA256_OF_TARBALL"
+  sha256 "4420a0c6f14c96f50735b8de34ac08ece64863f425a15517c20a010bdbd60865"
 
   depends_on "perl"
   depends_on "cpanminus"
