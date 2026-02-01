@@ -9,22 +9,20 @@ class Csc < Formula
   depends_on "cpanminus"
 
   def install
-    # Tarball contains a single file: ./csc
     libexec.install "csc"
 
-    # Install CPAN deps into a keg-local vendor dir (no touching system perl)
+    # Force the script to run with Homebrew perl (NOT macOS /usr/bin/perl)
+    perl = Formula["perl"].opt_bin/"perl"
+    inreplace libexec/"csc", %r{\A#!\s*/usr/bin/env\s+perl\s*$}, "#!#{perl}\n"
+
     vendor = libexec/"vendor"
     vendor.mkpath
 
-    # Keep cpanm home/cache in keg-local dirs
+    # Keep cpanm state inside the keg
     ENV["PERL_CPANM_HOME"] = (libexec/"cpanm_home").to_s
     ENV["PERL_CPANM_OPT"]  = "--notest --quiet"
 
-    # Ensure the *Homebrew* perl is used (not /usr/bin/perl)
-    # (brew sets PATH, but be explicit & safe)
-    ENV.prepend_path "PATH", Formula["perl"].opt_bin
-
-    # Runtime deps that are NOT embedded (CSC::* is embedded)
+    # Install runtime deps (CSC::* are embedded in csc)
     system "cpanm",
            "--local-lib-contained", vendor,
            "JSON::MaybeXS",
@@ -36,13 +34,8 @@ class Csc < Formula
            "XML::LibXML",
            "Archive::Zip"
 
-    # Wrap the executable so it finds the installed CPAN modules
     env = {
-      "PERL5LIB" => [
-        vendor/"lib/perl5",
-        # Some installs may put arch-specific under lib/perl5/<archname>
-        vendor/"lib/perl5/darwin-thread-multi-2level"
-      ].select(&:exist?).join(":")
+      "PERL5LIB" => (vendor/"lib/perl5").to_s
     }
 
     (bin/"csc").write_env_script(libexec/"csc", env)
