@@ -4,7 +4,7 @@ class Csc < Formula
   version "0.9.11"
 
   url "https://repo.compute.gu.se/src/csc-0.9.11.tar.gz"
-  sha256 "941907e6f5714a7bf672c13bb9a76e6c1096614b2f3939efb820d2a72cd248d9"
+  sha256 "e150cf33efd87fae926d0606c5e2aa290b3f7db8c04b56f8080c21b02d181454"
 
   depends_on "perl"
   depends_on "cpanminus"
