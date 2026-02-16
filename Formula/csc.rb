@@ -2,10 +2,10 @@ class Csc < Formula
   desc "Universitet of Gothenburg - Computational Service Client (csc)"
   homepage "https://repo.compute.gu.se/"
   version "0.9.13"
-  revision 3
+  revision 4
 
-  url "https://repo.compute.gu.se/src/csc-0.9.13-1.tar.gz"
-  sha256 "8d90a76490bfae365a745311c30641150def9af6985b755cd6373b89bfd17f39"
+  url "https://repo.compute.gu.se/src/csc-0.9.13-4.tar.gz"
+  sha256 "25a18c39e45cf180b8b7c4588a394f7975095faa824e22fd695e4e306b21c5bd"
 
   depends_on "perl"
   depends_on "cpanminus"
