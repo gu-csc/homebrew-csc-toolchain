@@ -12,6 +12,7 @@ class Csc < Formula
 
   def install
     libexec.install "csc"
+    man1.install "share/man/man1/csc.1"
 
     perl = Formula["perl"].opt_bin/"perl"
 
