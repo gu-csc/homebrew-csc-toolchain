@@ -4,8 +4,8 @@ class Csc < Formula
   version "0.9.14"
   revision 2
 
-  url "https://repo.compute.gu.se/src/csc-0.9.14-1.tar.gz"
-  sha256 "ced81d9d774f4c252d7db7a861e34b14410122b8c35c4c8fc67bee08cfdaf929"
+  url "https://repo.compute.gu.se/src/csc-0.9.14-2.tar.gz"
+  sha256 "2a70aa012e94f8fe1b2f6f0033d25d87447b51fa3cf8dbb239a42de9ed90b0bb"
 
   depends_on "cpanminus" => :build
   depends_on "pkgconf" => :build
