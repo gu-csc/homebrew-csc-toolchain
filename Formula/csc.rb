@@ -2,10 +2,10 @@ class Csc < Formula
   desc "Universitet of Gothenburg - cSpace Service Client (csc)"
   homepage "https://repo.compute.gu.se/"
   version "0.9.14"
-  revision 2
+  revision 3
 
-  url "https://repo.compute.gu.se/src/csc-0.9.14-2.tar.gz"
-  sha256 "2a70aa012e94f8fe1b2f6f0033d25d87447b51fa3cf8dbb239a42de9ed90b0bb"
+  url "https://repo.compute.gu.se/src/csc-0.9.14-3.tar.gz"
+  sha256 "b16e508e2c8f2d1153b642a9f5ace5e4676434df454ced51e520f1e1a3b3737d"
 
   depends_on "cpanminus" => :build
   depends_on "pkgconf" => :build
