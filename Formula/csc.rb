@@ -2,10 +2,10 @@ class Csc < Formula
   desc "Universitet of Gothenburg - cSpace Service Client (csc)"
   homepage "https://repo.compute.gu.se/"
   version "0.9.14"
-  revision 3
+  revision 4
 
-  url "https://repo.compute.gu.se/src/csc-0.9.14-3.tar.gz"
-  sha256 "b16e508e2c8f2d1153b642a9f5ace5e4676434df454ced51e520f1e1a3b3737d"
+  url "https://repo.compute.gu.se/src/csc-0.9.14-4.tar.gz"
+  sha256 "803f9fda7be7acfa820aae53187b4debbf9120a9c0de87c016e6fe044a066348"
 
   depends_on "cpanminus" => :build
   depends_on "pkgconf" => :build
@@ -74,7 +74,7 @@ class Csc < Formula
     # CSC 0.9.14 prints help/version via Perl die; check the output independently
     # of its nonzero informational exit status.
     assert_match "Usage:", shell_output("#{bin}/csc --help", nil)
-    assert_match "0.9.14 (rev 1)", shell_output("#{bin}/csc version", nil)
+    assert_match "0.9.14 (rev 4)", shell_output("#{bin}/csc version", nil)
   end
 end
 
